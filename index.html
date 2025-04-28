@@ -2,15 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Extreme Fake Deploy</title>
+  <title>Deploy to Production</title>
 </head>
 <body style="text-align:center; background-color: #f0f8ff; margin-top:50px; font-family: monospace;">
 
-  <h1>Deploy Panel (Brace Yourself)</h1>
+  <h1>Production Deployment Portal</h1>
 
-  <button onclick="deploy('DEV')" style="font-size:20px;padding:15px;margin:10px;background-color:#4CAF50;color:white;border:none;border-radius:8px;">Deploy to DEV</button>
-  <button onclick="deploy('TEST')" style="font-size:20px;padding:15px;margin:10px;background-color:#2196F3;color:white;border:none;border-radius:8px;">Deploy to TEST</button>
-  <button onclick="deploy('PROD')" style="font-size:20px;padding:15px;margin:10px;background-color:#f44336;color:white;border:none;border-radius:8px;">Deploy to PROD</button>
+  <button onclick="deploy()" style="font-size:24px;padding:20px 50px;background-color:#f44336;color:white;border:none;border-radius:12px;cursor:pointer;">Deploy to PROD</button>
 
   <div id="console" style="background:black;color:lime;padding:20px;margin-top:30px;height:200px;overflow-y:auto;text-align:left;"></div>
 
@@ -18,43 +16,23 @@
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    function deploy(environment) {
-      document.getElementById("console").innerHTML = "";
-      document.getElementById("finale").innerHTML = "";
-      const logs = [
-        `Initiating deployment to ${environment}...`,
-        "Fetching artifacts...",
-        "Building containers...",
-        "Validating security protocols...",
-        "Connecting to servers...",
-        "Deploying application...",
-        "Finalising deployment...",
-        `${environment} Deployment Successful!`
-      ];
+    function deploy() {
+      if (confirm("Are you sure you want to deploy to PROD?")) {
+        if (confirm("Really sure? This could break EVERYTHING!!")) {
+          document.getElementById("console").innerHTML = "";
+          document.getElementById("finale").innerHTML = "";
+          const logs = [
+            "Connecting to production servers...",
+            "Checking system dependencies...",
+            "Building production package...",
+            "Running pre-deployment checks...",
+            "Deploying application to live environment...",
+            "Finalising deployment...",
+            "Deployment to PROD Successful!"
+          ];
 
-      let i = 0;
-      const interval = setInterval(function() {
-        if (i < logs.length) {
-          document.getElementById("console").innerHTML += logs[i] + "<br>";
-          document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
-          i++;
-        } else {
-          clearInterval(interval);
-          confetti({
-            particleCount: 500,
-            spread: 120
-          });
-
-          if (environment === "PROD") {
-            setTimeout(() => {
-              alert("WARNING: Deployment to PROD detected!! Initiating cat mode.");
-              document.getElementById("finale").innerHTML = "<img src='https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif' width='300'>";
-            }, 1000);
-          }
-        }
-      }, 700);
-    }
-  </script>
-
-</body>
-</html>
+          let i = 0;
+          const interval = setInterval(function() {
+            if (i < logs.length) {
+              document.getElementById("console").innerHTML += logs[i] + "<br>";
+              document.getElementBy
