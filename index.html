@@ -1,22 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Deploy Button</title>
+  <meta charset="UTF-8">
+  <title>Extreme Fake Deploy</title>
 </head>
-<body style="text-align:center;margin-top:50px;">
-    <button onclick="deploy()" style="font-size:24px;padding:20px 40px;background-color:red;color:white;border:none;border-radius:10px;cursor:pointer;">Deploy Code</button>
-    <div id="status" style="margin-top:30px;font-size:18px;"></div>
+<body style="text-align:center; background-color: #f0f8ff; margin-top:50px; font-family: monospace;">
 
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <script>
-    function deploy() {
-        document.getElementById("status").innerHTML = "Deploying...";
-        setTimeout(function(){
-            document.getElementById("status").innerHTML = "<b>Deployment Successful!</b>";
-            confetti();
-        }, 2000);
+  <h1>Deploy Panel (Brace Yourself)</h1>
+
+  <button onclick="deploy('DEV')" style="font-size:20px;padding:15px;margin:10px;background-color:#4CAF50;color:white;border:none;border-radius:8px;">Deploy to DEV</button>
+  <button onclick="deploy('TEST')" style="font-size:20px;padding:15px;margin:10px;background-color:#2196F3;color:white;border:none;border-radius:8px;">Deploy to TEST</button>
+  <button onclick="deploy('PROD')" style="font-size:20px;padding:15px;margin:10px;background-color:#f44336;color:white;border:none;border-radius:8px;">Deploy to PROD</button>
+
+  <div id="console" style="background:black;color:lime;padding:20px;margin-top:30px;height:200px;overflow-y:auto;text-align:left;"></div>
+
+  <div id="finale" style="margin-top:20px;"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <script>
+    function deploy(environment) {
+      document.getElementById("console").innerHTML = "";
+      document.getElementById("finale").innerHTML = "";
+      const logs = [
+        `Initiating deployment to ${environment}...`,
+        "Fetching artifacts...",
+        "Building containers...",
+        "Validating security protocols...",
+        "Connecting to servers...",
+        "Deploying application...",
+        "Finalising deployment...",
+        `${environment} Deployment Successful!`
+      ];
+
+      let i = 0;
+      const interval = setInterval(function() {
+        if (i < logs.length) {
+          document.getElementById("console").innerHTML += logs[i] + "<br>";
+          document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+          i++;
+        } else {
+          clearInterval(interval);
+          confetti({
+            particleCount: 500,
+            spread: 120
+          });
+
+          if (environment === "PROD") {
+            setTimeout(() => {
+              alert("WARNING: Deployment to PROD detected!! Initiating cat mode.");
+              document.getElementById("finale").innerHTML = "<img src='https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif' width='300'>";
+            }, 1000);
+          }
+        }
+      }, 700);
     }
-    </script>
+  </script>
+
 </body>
 </html>
