@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Deploy to Production</title>
 </head>
-<body style="text-align:center; background-color: #f0f8ff; margin-top:50px; font-family: monospace;">
+<body style="text-align:center; background-color: #f0f8ff; margin-top:50px; font-family: monospace; overflow-x:hidden;">
 
   <h1>Production Deployment Portal</h1>
 
@@ -62,20 +62,48 @@
           i++;
         } else {
           clearInterval(interval);
-          confetti({
-            particleCount: 800,
-            spread: 160
-          });
-          setTimeout(() => {
-            document.getElementById("finale").innerHTML = `
-              <h2 style="color:purple;">PROD is safe... for now!</h2>
-              <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="300">
-            `;
-          }, 1000);
+          startParty();
         }
       }, 800);
     }
+
+    function startParty() {
+      document.body.style.backgroundColor = "#000";
+      document.getElementById("finale").innerHTML = `
+        <h2 style="color:yellow; font-size:40px; animation: flash 1s infinite;">DEPLOYMENT COMPLETE!</h2>
+        <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="300">
+      `;
+
+      // Fire continuous confetti and fake fireworks
+      let end = Date.now() + (5 * 1000); // 5 seconds of party
+      (function frame() {
+        confetti({
+          particleCount: 5,
+          angle: 60,
+          spread: 55,
+          origin: { x: 0 }
+        });
+        confetti({
+          particleCount: 5,
+          angle: 120,
+          spread: 55,
+          origin: { x: 1 }
+        });
+
+        if (Date.now() < end) {
+          requestAnimationFrame(frame);
+        }
+      }());
+    }
   </script>
+
+  <style>
+    @keyframes flash {
+      0% { opacity: 1; }
+      50% { opacity: 0.1; }
+      100% { opacity: 1; }
+    }
+  </style>
 
 </body>
 </html>
