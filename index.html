@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Deploy Button</title>
+</head>
+<body style="text-align:center;margin-top:50px;">
+    <button onclick="deploy()" style="font-size:24px;padding:20px 40px;background-color:red;color:white;border:none;border-radius:10px;cursor:pointer;">Deploy Code</button>
+    <div id="status" style="margin-top:30px;font-size:18px;"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script>
+    function deploy() {
+        document.getElementById("status").innerHTML = "Deploying...";
+        setTimeout(function(){
+            document.getElementById("status").innerHTML = "<b>Deployment Successful!</b>";
+            confetti();
+        }, 2000);
+    }
+    </script>
+</body>
+</html>
