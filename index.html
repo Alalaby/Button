@@ -8,7 +8,9 @@
 
   <h1>Production Deployment Portal</h1>
 
-  <button onclick="deploy()" style="font-size:24px;padding:20px 50px;background-color:#f44336;color:white;border:none;border-radius:12px;cursor:pointer;">Deploy to PROD</button>
+  <div id="main">
+    <button onclick="confirmDeploy()" style="font-size:24px;padding:20px 50px;background-color:#f44336;color:white;border:none;border-radius:12px;cursor:pointer;">Deploy to PROD</button>
+  </div>
 
   <div id="console" style="background:black;color:lime;padding:20px;margin-top:30px;height:200px;overflow-y:auto;text-align:left;"></div>
 
@@ -16,23 +18,54 @@
 
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script>
-    function deploy() {
-      if (confirm("Are you sure you want to deploy to PROD?")) {
-        if (confirm("Really sure? This could break EVERYTHING!!")) {
-          document.getElementById("console").innerHTML = "";
-          document.getElementById("finale").innerHTML = "";
-          const logs = [
-            "Connecting to production servers...",
-            "Checking system dependencies...",
-            "Building production package...",
-            "Running pre-deployment checks...",
-            "Deploying application to live environment...",
-            "Finalising deployment...",
-            "Deployment to PROD Successful!"
-          ];
+    function confirmDeploy() {
+      document.getElementById("main").innerHTML = `
+        <h2 style="color:red;">ARE YOU SURE YOU WANT TO DEPLOY TO PROD?</h2>
+        <button onclick="reallyDeploy()" style="font-size:20px;padding:10px 30px;margin:10px;background-color:#ff5722;color:white;border:none;border-radius:8px;">YES, Deploy!</button>
+        <button onclick="cancelDeploy()" style="font-size:20px;padding:10px 30px;margin:10px;background-color:grey;color:white;border:none;border-radius:8px;">Cancel</button>
+      `;
+    }
 
-          let i = 0;
-          const interval = setInterval(function() {
-            if (i < logs.length) {
-              document.getElementById("console").innerHTML += logs[i] + "<br>";
-              document.getElementBy
+    function cancelDeploy() {
+      document.getElementById("main").innerHTML = `
+        <h2 style="color:green;">Phew! Deployment Cancelled.</h2>
+      `;
+    }
+
+    function reallyDeploy() {
+      document.getElementById("main").innerHTML = `<h2 style="color:lime;">Deploying to PROD...</h2>`;
+      const logs = [
+        "Connecting to production servers...",
+        "Checking system dependencies...",
+        "Building production package...",
+        "Running pre-deployment checks...",
+        "Deploying application to live environment...",
+        "Finalising deployment...",
+        "Deployment to PROD Successful!"
+      ];
+
+      document.getElementById("console").innerHTML = "";
+      document.getElementById("finale").innerHTML = "";
+
+      let i = 0;
+      const interval = setInterval(function() {
+        if (i < logs.length) {
+          document.getElementById("console").innerHTML += logs[i] + "<br>";
+          document.getElementById("console").scrollTop = document.getElementById("console").scrollHeight;
+          i++;
+        } else {
+          clearInterval(interval);
+          confetti({
+            particleCount: 500,
+            spread: 120
+          });
+          setTimeout(() => {
+            document.getElementById("finale").innerHTML = "<img src='https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif' width='300'>";
+          }, 1000);
+        }
+      }, 800);
+    }
+  </script>
+
+</body>
+</html>
