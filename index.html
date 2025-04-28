@@ -12,7 +12,7 @@
     <button onclick="confirmDeploy()" style="font-size:24px;padding:20px 50px;background-color:#f44336;color:white;border:none;border-radius:12px;cursor:pointer;">Deploy to PROD</button>
   </div>
 
-  <div id="console" style="background:black;color:lime;padding:20px;margin-top:30px;height:200px;overflow-y:auto;text-align:left;"></div>
+  <div id="console" style="background:black;color:lime;padding:20px;margin-top:30px;height:300px;overflow-y:auto;text-align:left;"></div>
 
   <div id="finale" style="margin-top:20px;"></div>
 
@@ -20,7 +20,8 @@
   <script>
     function confirmDeploy() {
       document.getElementById("main").innerHTML = `
-        <h2 style="color:red;">ARE YOU SURE YOU WANT TO DEPLOY TO PROD?</h2>
+        <h2 style="color:red;">ARE YOU ABSOLUTELY SURE?</h2>
+        <p>There's no going back!</p>
         <button onclick="reallyDeploy()" style="font-size:20px;padding:10px 30px;margin:10px;background-color:#ff5722;color:white;border:none;border-radius:8px;">YES, Deploy!</button>
         <button onclick="cancelDeploy()" style="font-size:20px;padding:10px 30px;margin:10px;background-color:grey;color:white;border:none;border-radius:8px;">Cancel</button>
       `;
@@ -28,7 +29,7 @@
 
     function cancelDeploy() {
       document.getElementById("main").innerHTML = `
-        <h2 style="color:green;">Phew! Deployment Cancelled.</h2>
+        <h2 style="color:green;">Deployment Cancelled. You are wise.</h2>
       `;
     }
 
@@ -36,12 +37,18 @@
       document.getElementById("main").innerHTML = `<h2 style="color:lime;">Deploying to PROD...</h2>`;
       const logs = [
         "Connecting to production servers...",
-        "Checking system dependencies...",
-        "Building production package...",
-        "Running pre-deployment checks...",
+        "Checking environment variables...",
+        "Backing up critical systems...",
+        "Warning: Backup will be stored under developer's desk.",
+        "Installing node_modules (this may take 10 years)...",
+        "Brewing coffee...",
+        "Convincing servers to cooperate...",
+        "Running pre-deployment dance...",
         "Deploying application to live environment...",
+        "Crossing fingers...",
         "Finalising deployment...",
-        "Deployment to PROD Successful!"
+        "Cleaning up confetti from last deployment...",
+        "Deployment to PROD Successful! Time for cake."
       ];
 
       document.getElementById("console").innerHTML = "";
@@ -56,11 +63,14 @@
         } else {
           clearInterval(interval);
           confetti({
-            particleCount: 500,
-            spread: 120
+            particleCount: 800,
+            spread: 160
           });
           setTimeout(() => {
-            document.getElementById("finale").innerHTML = "<img src='https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif' width='300'>";
+            document.getElementById("finale").innerHTML = `
+              <h2 style="color:purple;">PROD is safe... for now!</h2>
+              <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="300">
+            `;
           }, 1000);
         }
       }, 800);
